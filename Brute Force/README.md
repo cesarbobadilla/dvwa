@@ -8,3 +8,21 @@ Si usa https://labs.play-with-docker.com/ se recomienda usar
 
 docker login -u username -p password
 
+En la carpeta SSH, usamos el archivo Dockerfile, luego 
+
+docker build -t alpine-ssh .
+
+docker run --rm --publish=2222:22 alpine-ssh
+
+Desde otro contenedor 
+
+ssh root@192.168.0.6 -p 2222
+
+Ponemos el password: computer
+
+En la carpeta HYDRA, usamos el archivo Dockerfile, luego
+
+docker build -t kali-hydra .
+
+docker run -it kali-hydra /bin/bash 
+
