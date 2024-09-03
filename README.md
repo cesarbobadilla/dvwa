@@ -68,7 +68,14 @@ Debería seguir ejecutando hasta que vea algo como
 Hydra (https://github.com/vanhauser-thc/thc-hydra) finished at 2024-08-30 15:54:40
 
 
+
 Donde concluimos que la contraseña adivinada es "computer"
+
+
+SEGUNDA PARTE
+===============================================================
+
+1
 
 Levantamos otra instancia donde ejecutamos el proyecto de DVWA
 
@@ -76,30 +83,53 @@ git clone https://github.com/cytopia/docker-dvwa.git
 cd docker-dvwa/
 make start
 
+
 Una vez concluido esto debemos ver algo como
 
+
 ...
+
 ..
+
 .
+
 $ make start
 
+
 +] Running 4/4
+
  ✔ Network docker-dvwa_dvwa-net       Created                                                                       0.0s 
+ 
  ✔ Volume "docker-dvwa_dvwa_db_data"  Created                                                                       0.0s 
- ✔ Container docker-dvwa-dvwa_web-1   Started                                                                       0.1s 
- ✔ Container docker-dvwa-dvwa_db-1    Started                                                                       0.1s 
+ 
+ ✔ Container docker-dvwa-dvwa_web-1   Started                                                                       0.1s
+ 
+ ✔ Container docker-dvwa-dvwa_db-1    Started                                                                       0.1s
+ 
 docker-compose logs dvwa_web 2>&1 | grep "Setting"
+
 docker-dvwa-dvwa_web-1  | Setting PHP version:        PHP 8.1.16 (cli) (built: Mar  1 2023 12:38:41) (NTS)
+
 docker-dvwa-dvwa_web-1  | Setting MySQL hostname:     dvwa_db
+
 docker-dvwa-dvwa_web-1  | Setting MySQL database:     dvwa
+
 docker-dvwa-dvwa_web-1  | Setting MySQL username:     dvwa
+
 docker-dvwa-dvwa_web-1  | Setting MySQL password:     ********
+
 docker-dvwa-dvwa_web-1  | Setting Recaptcha priv key: 
+
 docker-dvwa-dvwa_web-1  | Setting Recaptcha pub key:  
+
 docker-dvwa-dvwa_web-1  | Setting Security level:     medium
+
 docker-dvwa-dvwa_web-1  | Setting PHP error display:  0
+
 docker-dvwa-dvwa_web-1  | Setting PHP IDS state:      disabled
+
 docker-dvwa-dvwa_web-1  | Setting PHP IDS verbosity:  false
+
 
  Y el proyecto estará ejecutando en el puerto 8000, en login.php, ingresamos con usuario admin y password admin, esto nos llevará a setup.php donde configuramos el proyecto presionando el boton  "Create/Reset Database" al final de la página, al final de la página aparecerá algo como:
 
