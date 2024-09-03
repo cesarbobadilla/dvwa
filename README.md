@@ -4,26 +4,37 @@ Damn Vulnerable Web Application (DVWA) is a PHP/MySQL web application that is da
 
 Project Home: https://github.com/digininja/DVWA
 
+PRIMERA PARTE
+===============================================================
+1
 Si usa https://labs.play-with-docker.com/ se recomienda usar 
 
 docker login -u username -p password
+git clone https://github.com/cesarbobadilla/dvwa.git
+cd dvwa  
+git checkout BruteForce
 
+2
 En la carpeta SSH, usamos el archivo Dockerfile, luego 
 
-docker build -t alpine-ssh .
+docker build -t alpine-ssh SSH/.
 
 docker run --rm --publish=2222:22 alpine-ssh
 
+3
 Desde otra instancia podemos probar el acceso 
 
 ssh root@host -p 2222   por ejemplo ( ssh root@192.168.0.6 -p 2222 )
 
 Ponemos el password: computer (que se configuro en el ejemplo, especificamente en el Dockerfile)
 
+4
 Ahora en otra instancia, usamos lo que hay en la carpeta HYDRA, usamos el archivo Dockerfile, luego
 
-docker build -t kali-hydra .
-
+git clone https://github.com/cesarbobadilla/dvwa.git
+cd dvwa  
+git checkout BruteForce
+docker build -t kali-hydra HYDRA/.
 docker run -it kali-hydra /bin/bash 
 
 Una vez que estamos en la shell del contenedor, descargamos un diccionario de contraseñas de 10000 posibilidades
