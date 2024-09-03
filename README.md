@@ -93,8 +93,11 @@ SEGUNDA PARTE
 
 Levantamos otra instancia donde ejecutamos el proyecto de DVWA
 
+
 git clone https://github.com/cytopia/docker-dvwa.git
+
 cd docker-dvwa/
+
 make start
 
 
@@ -146,9 +149,11 @@ docker-dvwa-dvwa_web-1  | Setting PHP IDS verbosity:  false
 
 
 
+
 Y el proyecto estará ejecutando en el puerto 8000 (si usa https://labs.play-with-docker.com/, de click en el boton OPEN PORT y digite el numero 8000 ), en login.php, ingresamos con usuario admin y password admin, esto nos llevará a setup.php donde configuramos el proyecto presionando el boton  "Create/Reset Database" al final de la página, y ahora,  al final de la página aparecerá algo como:
 
- ...
+
+...
  
  ..
  
@@ -169,6 +174,8 @@ Backup file /config/config.inc.php.bak automatically created
 Setup successful!
 
 Please login.
+
+
 
 
 
